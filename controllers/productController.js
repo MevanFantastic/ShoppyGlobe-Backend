@@ -1,7 +1,7 @@
 const Product = require('../models/Product');
 const mongoose = require('mongoose');
 
-// GET /products
+
 exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await Product.find();
@@ -11,7 +11,10 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
-// GET /products/:id
+
+
+
+
 exports.getProductById = async (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {

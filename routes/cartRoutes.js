@@ -4,12 +4,11 @@ const {
   addToCart,
   updateCartItem,
   removeCartItem
-} = require('../controllers/cartController');
+} =require('../controllers/cartController');
 
 const authMiddleware = require('../middleware/authMiddleware');
-
 router.post('/', authMiddleware, addToCart);
-router.put('/:id', authMiddleware, updateCartItem);
+ router.put('/:id', authMiddleware, updateCartItem);
 router.delete('/:id', authMiddleware, removeCartItem);
 
 

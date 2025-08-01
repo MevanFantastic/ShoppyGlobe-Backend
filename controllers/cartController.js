@@ -1,13 +1,13 @@
 const Cart = require('../models/Cart');
 const mongoose = require('mongoose');
 
-// POST /cart - add product to cart
+
 exports.addToCart = async (req, res, next) => {
   const userId = req.user.id;
   const { product, quantity } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(product)) {
-    return res.status(400).json({ message: 'Invalid product ID' });
+    return res.status(400).json({ message: 'Invalid product ID' }); // fix
   }
 
   if (!quantity || quantity < 1) {
@@ -29,7 +29,7 @@ exports.addToCart = async (req, res, next) => {
 };
 
 
-// PUT /cart/:id - update cart item quantity
+
 exports.updateCartItem = async (req, res, next) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -40,13 +40,15 @@ exports.updateCartItem = async (req, res, next) => {
   if (!quantity || quantity < 1) {
     return res.status(400).json({ message: 'Quantity must be at least 1' });
   }
-  try {
+try {
+
+  
     const cartItem = await Cart.findById(id);
     if (!cartItem) return res.status(404).json({ message: 'Cart item not found' });
     if (cartItem.user.toString() !== userId) {
       return res.status(403).json({ message: 'Not authorized' });
     }
-    cartItem.quantity = quantity;
+cartItem.quantity = quantity;
     await cartItem.save();
     res.json(cartItem);
   } catch (err) {
@@ -54,7 +56,7 @@ exports.updateCartItem = async (req, res, next) => {
   }
 };
 
-// DELETE /cart/:id - remove cart item
+// DELETE
 exports.removeCartItem = async (req, res, next) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -67,6 +69,8 @@ exports.removeCartItem = async (req, res, next) => {
     if (cartItem.user.toString() !== userId) {
       return res.status(403).json({ message: 'Not authorized' });
     }
+
+
     await cartItem.deleteOne();
     res.json({ message: 'Cart item removed' });
   } catch (err) {
